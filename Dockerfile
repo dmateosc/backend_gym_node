@@ -1,10 +1,9 @@
-FROM node:10-alpine
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-WORKDIR /home/node/app
-COPY package*.json ./
-USER node
-RUN npm install
-COPY --chown=node:node . .
-EXPOSE 8080
+FROM mongo:latest
 
-CMD [ "node", "app.js" ]
+# custom label for the docker image
+LABEL version="0.1" maintainer="ObjectRocket"
+
+# use 'RUN' to execute commands in the container's bash terminal
+CMD [ "service", "mongodb", "start", "-y" ]
+# expose MongoDB's default port of 27017
+EXPOSE 27017
