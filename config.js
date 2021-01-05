@@ -1,5 +1,5 @@
-/* var env = require("node-env-file");
-env(__dirname + "/" + process.env.NODE_ENV + ".env"); */
+var env = require("dotenv").config();
+//env(__dirname + "/" + process.env.NODE_ENV + ".env");
 
 
 const MONGO_BASE = process.env.MONGO_BASE || "";
