@@ -1,0 +1,1 @@
+//Modelo de mongodb de la clase Gym

@@ -1,0 +1,29 @@
+{
+  "name": "backend_gym",
+  "version": "1.0.0",
+  "description": "Backend del gimnasio",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "dev": "set NODE_ENV=development&& nodemon index.js",
+    "prod": "set NODE_ENV=production&& nodemon index.js"
+  },
+  "author": "David Mateos Cano",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-multiparty": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "generate-schema": "^2.6.0",
+    "json-schema-generator": "^2.0.6",
+    "mongoose": "^5.10.5",
+    "multer": "^1.4.2",
+    "node-env-file": "^0.1.8",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
