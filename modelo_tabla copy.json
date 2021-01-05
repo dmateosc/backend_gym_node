@@ -1,0 +1,89 @@
+{
+  "usuario": { //Elementos de objeto usuario
+    "nombre": "XX",
+    "id": "identificador creado en la bd"
+  },
+  "ejercicios": [
+    { //Objeto ejercicios que tiene fecha, rutina y ejercicio (la fecha es para indicar ucando se debe realizar y es un array de strings)
+      //la utilidad sería, buscar los ejercicios cuyos elementos dentro de diaEntrenamiento contengan la fecha
+      "diaEntrenamiento": [
+        "",
+        ""
+      ],
+      "rutina": [
+        { //objeto rutina que contiene ejercicio y serie 
+          "ejercicio": { //1:1
+            "nombre": "biceps",
+            "idEjercicio": ""
+          },
+          "serie": [
+            { //1..N
+              "peso": "",
+              "repeticiones": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "diaEntrenamiento": "",
+      "rutina": [
+        {
+          "ejercicio": {
+            "nombre": "biceps",
+            "idEjercicio": ""
+          },
+          "serie": [
+            {
+              "peso": "",
+              "repeticiones": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dieta": [ //Aqui iremos almacenando los diferentes objetos de tipo dieta para el usuario
+    {
+      "diaDieta": [ //se obtendra mediante findByOne para coger el ultimo en el caso de que haya mas dias de dietas coincidentes
+        ""
+      ],
+      "totalCalorias": [
+        ""
+      ],
+      "desayuno": [
+        {
+          "nombreAlimento": "",
+          "cantidadPeso": 111, //cantidad del alimento o de la receta
+          "recetasDesayuno": [
+            { //Objeto recetas en base al almiento
+              "nombre": "nombre"
+            }
+          ]
+        }
+      ],
+      "comida": [
+        {
+          "nombreAlimento": "",
+          "cantidadPeso": 111, //cantidad del alimento o de la receta
+          "recetasComida": [
+            { //Objeto recetas en base al almiento
+              "nombre": "nombre"
+            }
+          ]
+        }
+      ],
+      "cena": [
+        {
+          "nombreAlimento": "",
+          "cantidadPeso": 111, //cantidad del alimento o de la receta
+          "recetasCena": [
+            { //Objeto recetas en base al almiento
+              "nombre": "nombre"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

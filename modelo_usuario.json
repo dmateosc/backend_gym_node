@@ -1,0 +1,34 @@
+{
+    "nickname": "",
+    "nombre": "",
+    "apellidos":"",
+    "dni": "",
+    "edad" : 0,
+    "email": "",
+    "categoria": [
+        "volumen","adminstrador","entrenador"
+    ],
+    "estado": [{ //Objeto Estado
+        "fecha": "",
+        "peso": 0,
+        "masa_corporal": "",
+        "musculo":"",
+        "grasa": ""
+    }],
+    "objetivo": "",
+    "entrenador": {
+        "id_entrenador": "",
+        "nombre_entrenador": ""
+    },
+    "clases": [ //objeto Clases
+        {
+            //objeto clases (tiene que tener los horarios y seleccionar una hora dentro del objeto clase que cargará las clases por defecto)
+            //es decir aqui dentro se generara una copia del objeto clase y se modificará un valor de hora depende de la seleccion
+            // el valor hora es un array con strings, es decir si se cargan varias clases se complementará con varias clases, pero si se carga una se 
+            //complementará con unas
+
+        }
+    ]
+
+
+}
