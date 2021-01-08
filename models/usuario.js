@@ -5,6 +5,7 @@ var Clase = require("./clase");
 var Schema = mongoose.Schema;
 
 var Usuario = Schema({
+  uid: String,
   nickname: String,
   password: String,
   photo: String,

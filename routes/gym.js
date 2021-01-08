@@ -53,6 +53,7 @@ var multiMiddlewareUser = multer({ storage: userStore });
 router.get("/user-id/:id",UserController.getUserById);
 router.put("/user-status/:nickname", UserController.updateStatusUser);
 router.put("/user-class/:nickname", UserController.updateClaseUser);
+router.post("/user-id",UserController.getUser);
 router.post("/create-user", UserController.createUser);
 router.post("/login", UserController.login);
 

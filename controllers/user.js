@@ -11,7 +11,20 @@ var UserController = {
   getUserById: function (req, res) {
     var params = req.params;
     var id = params.id;
-    User.findById(id, (err, user) => {
+    User.find({_id: id}, (err, user) => {
+      if (user) {
+        return res.status(200).send({
+          user: user,
+        });
+      }
+    });
+  },
+
+   //obtener usuario
+   getUser: function (req, res) {
+    var body = req.body;
+    var uid = params.body;
+    User.find({uid: uid }, (err, user) => {
       if (user) {
         return res.status(200).send({
           user: user,
@@ -28,11 +41,13 @@ var UserController = {
     var body = req.body;
     user.nickname = body.nickname;
     User.find(
-      { nickname: body.nickname, email: body.email },
+      { nickname: body.nickname, email: body.email, uid: body.uid },
       (err, userExist) => {
         if (userExist.length >= 1) {
           return res.status(400).send("El usuario ya existe");
         } else {
+          user.uid = body.uid;
+
           user.nombre = body.nombre;
           user.password = body.password;
           user.apellidos = body.apellidos;
@@ -84,7 +99,7 @@ var UserController = {
         if (!userLoged)
           return res.status(401).send({ message: "El usuario no existe." });
 
-        return res.status(200).send({ id: userLoged._id });
+        return res.status(200).send({ uid: userLoged.uid });
       }
     );
   },
@@ -107,7 +122,7 @@ var UserController = {
 
     //Se actualizan los campos de estado
     User.updateOne(
-      { nickname: nickname },
+      { uid: uid },
       {
         $set: { objetivo: objetivo, categoria: categoria },
         $push: {
@@ -119,14 +134,14 @@ var UserController = {
   //Actualiza las clases del usuario
   updateClaseUser: function (req, res) {
     var body = req.body;
-    var nickname = body.nickname;
+    var uid = body.uid;
 
     var clase = new Clase();
     clase.nombre = body.nombre;
 
     //Se actualizan los campos de estado
     User.updateOne(
-      { nickname: nickname },
+      { uid: uid },
       {
         $push: {
           clase: clase,
