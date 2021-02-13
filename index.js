@@ -1,34 +1,30 @@
 //Se encarga de la carga inicial de la aplicación, cargara la conexión a la base de datos y tendrá el servidor a la escucha
 //de los diferentes servicios de fondo
-"use strict";
-const config = require('./config.js');
-var mongoose = require("mongoose");
-var app = require("./app");
+require("dotenv").config();
+var express = require("express");
 
-var port = config.PORT;
+const cors = require("cors");
+
+const { dbConnection } = require("./database/config");
+
+var app = express();
+
+dbConnection();
+
+// middlewares
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static('public'));
 
 
+app.use(cors());
 
-mongoose.Promise = global.Promise;
-mongoose
- /*  .connect("mongodb://127.0.0.1:28017/gym", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false 
-  }) */
-  .connect(config.MONGO_CONNECT, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false 
-  })
-  .then(() => {
-    console.log(
-      "Conexión a la base de datos establecida satisfactoriamente... a", config.MONGO_CONNECT
-    );
+// rutas
 
-    // Creacion del servidor
-    app.listen(port, () => {
-      console.log("Servidor corriendo correctamente en la url:", config.HOST, config.PORT);
-    });
-  })
-  .catch((err) => console.log(err));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api", require("./routes/gym"));
+
+//Escuchar peticiones
+app.listen(process.env.PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
+});

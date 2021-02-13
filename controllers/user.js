@@ -69,12 +69,20 @@ const createUser = async (req, res) => {
     res.status(500).send({ message: "Error al guardar el usuario." });
   }
 }; //fin createUser
+
+const updateJW = async(req,res) => {
+
+};
+
+const getJWT = async(req,res) => {
+
+};
+
 //inicio getId
 const login = async (req, res) => {
   var body = req.body;
   var nickname = body.nickname;
   var password = body.password;
-  console.log(nickname, password);
   try {
     let user;
     if (nickname.includes("@")) {

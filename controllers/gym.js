@@ -6,7 +6,7 @@ var path = require("path");
 var Musculo = require("../models/musculo");
 var Ejercicio = require("../models/ejercicio");
 var User = require("../models/usuario");
-const { map } = require("../app");
+
 
 var GymController = {
   uploadUserImage: function (req, res) {

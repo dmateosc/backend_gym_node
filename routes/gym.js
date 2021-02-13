@@ -11,7 +11,9 @@ const MusculoController = require("../controllers/muscle");
 
 var router = express.Router();
 var multer = require("multer");
+const { validarJWT } = require("../middlewares/jwt-validator");
 
+router.use(validarJWT)
 
 var userStore = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -53,8 +55,10 @@ var multiMiddlewareUser = multer({ storage: userStore });
 router.get("/user-id/:id",UserController.getUserById);
 router.put("/user-status/:nickname", UserController.updateStatusUser);
 router.put("/user-class/:nickname", UserController.updateClaseUser);
-router.post("/create-user", UserController.createUser);
-router.post("/login", UserController.login);
+//router.post("/create-user", UserController.createUser);
+//router.post("/login", UserController.login);
+
+
 
 //Subida de imagenes
 router.post(

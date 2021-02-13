@@ -1,11 +1,18 @@
 "use strict";
 
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+var {Schema, model}  = require("mongoose");
+
 
 var Ejercicio = Schema({
   nombre: String,
   musculos: [String],
   imagenes: [String]
 });
-module.exports = mongoose.model("Ejercicio", Ejercicio);
+
+Ejercicio.method('toJSON', function(){
+  const {__v, _id, ...ejercicios} = this.toObject();
+  ejercicios.id = _id;
+  return ejercicios;
+})
+
+module.exports = model("Ejercicio", Ejercicio);
