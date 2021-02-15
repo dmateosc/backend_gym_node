@@ -3,68 +3,64 @@
 "use strict";
 const Musculo = require("../models/musculo");
 
-var MusculoController = {
-  //permite crear un Musculo por su nombre
-  getMusculo: function (req, res) {
-    var params = req.params;
-    var nombreMusculo = params.nombre.toUpperCase();
-
-    Musculo.findOne({ nombre: nombreMusculo }, (err, musculos) => {
-      if (err)
-        return res.status(500).send({
-          messageError: "Ha ocurrido un error al obtener el Musculo",
-        });
-
-      if (!musculos)
-        return res
-          .status(404)
-          .send({ messageError: "No ha encontrado el registro" });
-
-      return res.status(200).send({
-        musculos: musculos,
+//permite crear un Musculo por su nombre
+const getMusculo = async (req, res) => {
+  var params = req.params;
+  var nombreMusculo = params.nombre.toUpperCase();
+  try {
+    let musculos = await Musculo.findOne({ nombre: nombreMusculo });
+    if (musculos) {
+      res.status(200).json({
+        musculos,
       });
+    } else {
+      res.status(404).json({ messageError: "No ha encontrado el registro" });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      messageError: "Ha ocurrido un error al obtener el Musculo",
     });
-  },
-  //permite obtener varios musculos
-  getMusculos: function (req, res) {
-    
-    Musculo.find({}).exec((err, musculos) => {
-      if (err)
-        return res.status(500).send({
-          messageError: "Ha ocurrido un error al obtener el Musculo",
-        });
-
-      if (!musculos)
-        return res
-          .status(404)
-          .send({ messageError: "No ha encontrado el registro" });
-
-      return res.status(200).send({
+  }
+};
+//permite obtener varios musculos
+const getMusculos = async (req, res) => {
+  try {
+    let musculos = await Musculo.find({});
+    if (!musculos) {
+      res.status(404).json({ messageError: "No ha encontrado el registro" });
+    } else {
+      res.status(200).json({
         muscles: musculos,
       });
+    }
+  } catch (error) {
+     res.status(500).json({
+      messageError: "Ha ocurrido un error al obtener el Musculo",
     });
-  },
-  //Crea un Musculo
-  createMusculo: function (req, res) {
-    var body = req.body;
-    var musculo = new Musculo();
-    musculo.nombre = body.nombre;
-    musculo.imagenes = [];
-
-    musculo.save((err, createdMuscle) => {
-      if (err)
-        return res.status(500).send({
-          messageError: "Ha ocurrido un error al crear el Musculo",
-        });
-      if (!createdMuscle)
-        return res.status(400).send({
-          message: "No se ha registrado el Musculo",
-        });
-
-      return res.status(200).send({
+  }
+};
+//Crea un Musculo
+const createMusculo = async (req, res) => {
+  var body = req.body;
+  var musculo = new Musculo();
+  musculo.nombre = body.nombre;
+  musculo.imagenes = [];
+  try {
+    let createdMuscle = await musculo.save();
+    if (!createdMuscle) {
+       res.status(400).json({
+        message: "No se ha registrado el Musculo",
+      });
+    } else {
+       res.status(200).json({
         Musculo: createdMuscle,
       });
+    }
+  } catch (error) {
+     res.status(500).json({
+      messageError: "Ha ocurrido un error al crear el Musculo",
     });
-  },
+  }
 };
+var MusculoController = { getMusculo, getMusculos, createMusculo };
 module.exports = MusculoController;
