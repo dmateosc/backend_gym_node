@@ -4,7 +4,7 @@ const User = require("../models/usuario");
 const { generarJWT } = require("../helpers/jwt");
 
 const crearUsuario = async (req, res = response) => {
-  const { nickname,email, password } = req.body;
+  const { nickname, email, password } = req.body;
   try {
     let usuario = await User.findOne({ email });
     let usuarioNickname = await User.findOne({ nickname });
@@ -16,7 +16,7 @@ const crearUsuario = async (req, res = response) => {
       });
     } else {
       usuario = new User(req.body);
-      console.log(usuario)
+      console.log(usuario);
       //Encriptar contraseña
       const salt = bcrypt.genSaltSync();
       usuario.password = bcrypt.hashSync(password, salt);
@@ -48,10 +48,15 @@ const loginUsuario = async (req, res = response) => {
     //Encriptar contraseña
     const salt = bcrypt.genSaltSync();
     passwordValidation = bcrypt.hashSync(password, salt);
-    const usuario = await User.findOne({ email, nickname });
-    
-    if (usuario ) {
-      const validPassword = bcrypt.compareSync(password, usuario.password);
+
+    if (nickname.includes("@")) {
+      var usuarioEmail = nickname && (await User.findOne({ email: nickname }));
+    } else {
+      var usuarioEmail = email && (await User.findOne({ email }));
+      var usuarioNickname = nickname && (await User.findOne({ nickname }));
+    }
+    if (usuarioEmail) {
+      const validPassword = bcrypt.compareSync(password, usuarioEmail.password);
       if (!validPassword) {
         return res.status(400).json({
           ok: false,
@@ -60,18 +65,36 @@ const loginUsuario = async (req, res = response) => {
       }
 
       //Generar JWT
-      const token = await generarJWT(usuario.id, usuario.nickname);
+      const token = await generarJWT(usuarioEmail.id, usuarioEmail.nickname);
 
       res.status(200).json({
         ok: true,
-        uid: usuario.id,
-        name: usuario.nickname,
+        uid: usuarioNickname.id,
+        name: usuarioNickname.nickname,
+        token,
+      });
+    } else if (usuarioNickname) {
+      const validPassword = bcrypt.compareSync(password, usuarioNickname.password);
+      if (!validPassword) {
+        return res.status(400).json({
+          ok: false,
+          msg: "Password incorrecto",
+        });
+      }
+
+      //Generar JWT
+      const token = await generarJWT(usuarioNickname.id, usuarioNickname.nickname);
+
+      res.status(200).json({
+        ok: true,
+        uid: usuarioNickname.id,
+        name: usuarioNickname.nickname,
         token,
       });
     } else {
       return res.status(400).json({
         ok: false,
-        msg: "El usuario y contrasñas no son válidos",
+        msg: "El usuario y contraseña no es válido",
       });
     }
   } catch (error) {
@@ -83,13 +106,14 @@ const loginUsuario = async (req, res = response) => {
 };
 
 const renovarUsuario = async (req, res = response) => {
-  const {uid, name} = req;
+  const { uid, name } = req;
   //Generar JWT
   const token = await generarJWT(uid, name);
   res.json({
     ok: true,
-    uid,name,
-    token
+    uid,
+    name,
+    token,
   });
 };
 

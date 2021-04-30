@@ -11,9 +11,6 @@ const router = Router();
 */
 //Esto es para logarse
 router.post("/login",[
-
-    check("nickname", "El nombre es obligatorio").not().isEmpty(),
-    check("email", "El email es obligatorio").isEmail(),
     check("password", "El password no es válido").isStrongPassword(),
     validarCampos
   ], login);

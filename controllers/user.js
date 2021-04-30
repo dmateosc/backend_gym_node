@@ -70,13 +70,6 @@ const createUser = async (req, res) => {
   }
 }; //fin createUser
 
-const updateJW = async(req,res) => {
-
-};
-
-const getJWT = async(req,res) => {
-
-};
 
 //inicio getId
 const login = async (req, res) => {

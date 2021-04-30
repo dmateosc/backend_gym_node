@@ -2,8 +2,10 @@
 
 var Tabla = require("../models/tabla");
 var User = require("../models/usuario");
-var TrainingController = {
-  getTrainingDay: function (req, res) {
+
+// metodo para obener entrenamientos por dias
+
+  const getTrainingDay = async (req, res) => {
     var params = req.params;
     var nickname = params.nickname;
     var day = params.day;
@@ -11,21 +13,29 @@ var TrainingController = {
     if (day.length == 0) {
       day = Date.now();
     }
-    Tabla.find(
+    try {
+      
+   
+    const trainingTable = await Tabla.find(
       { nickname: nickname },
-      { dias: { $exists: day } },
-      (err, trainingTable) => {
-        if (err)
-          return res
-            .status(500)
-            .send("Ha ocurrido un error al buscar el entrenamiento");
-        return res.status(200).send({
-          training: trainingTable,
-        });
-      }
-    );
-  },
-  createTraining: function (req, res) {
+      { dias: { $exists: day } }) ;
+        
+      if(!trainingTable)
+        return res.status(404).send("Entrenamiento no encontrado");
+      
+      return res.status(200).send({training: trainingTable});
+      
+    
+  } catch (error) {
+    return res
+    .status(500)
+    .send("Ha ocurrido un error al buscar el entrenamiento");
+  }
+  }
+
+
+  /*Metodo para crear entrenamientos */
+  const createTraining = async (req, res) => {
     var body = req.body;
     var nickname = body.nickname;
     var userId = body.idUsuario;
@@ -50,31 +60,35 @@ var TrainingController = {
     tabla.idUsuario = userId;
     tabla.dias = body.dias;
 
-    tabla.save((err, trainingInsert) => {
-      if (err)
-        return res
-          .status(500)
-          .send("No se ha podido almacenar el entrenamiento");
+    try {
+      const saved = await tabla.save() 
+        
+        if (!saved)
+          return res.status(400).send("Entramiento no almacenado");
+  
+      const userTrainingSaved = await User.findOneAndUpdate(
+          { nickname: nickname },
+          {
+            $push: {
+              entrenamientos: trainingInsert._id,
+            },
+          }) 
+        if (!userTrainingSaved)
+          return res.status(400).send("Entramiento no almacenado");
 
-      if (!trainingInsert)
-        return res.status(400).send("Entramiento no almacenado");
+        return res.status(200).send({
+          message: "Se ha insertado correctamente",
+        });
+      
+    } catch (error) {
+      return res
+      .status(500)
+      .send("No se ha podido almacenar el entrenamiento");
+    }
+      
+  }
 
-      User.findOneAndUpdate(
-        { nickname: nickname },
-        {
-          $push: {
-            entrenamientos: trainingInsert._id,
-          },
-        },
-        (err, updatedTraining) => {
-          if (err) console.log(err);
-        }
-      );
-      return res.status(200).send({
-        message: "Se ha insertado correctamente",
-      });
-    });
-  },
-};
 
-module.exports = TrainingController;
+
+
+module.exports = {getTrainingDay,createTraining};
