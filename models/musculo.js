@@ -5,7 +5,10 @@ var {Schema, model}  = require("mongoose");
 
 var Musculo = Schema({
   nombre: String,
-  imagenes: [String],
+  imagenes: {
+    fileName: String,
+    key: String
+  },
 });
 
 Musculo.method('toJSON', function(){

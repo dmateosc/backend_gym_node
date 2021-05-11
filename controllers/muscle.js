@@ -43,7 +43,7 @@ const getMusculos = async (req, res) => {
 const createMusculo = async (req, res) => {
   var body = req.body;
   var musculo = new Musculo();
-  musculo.nombre = body.nombre;
+  musculo.nombre = body.nombre.toUpperCase();
   musculo.imagenes = [];
   try {
     let createdMuscle = await musculo.save();

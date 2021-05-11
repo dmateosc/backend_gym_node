@@ -7,6 +7,8 @@ const cors = require("cors");
 
 const { dbConnection } = require("./database/config");
 
+const {listarBuckets} = require("./middlewares/aws-connect")
+
 var app = express();
 
 dbConnection();
@@ -23,6 +25,8 @@ app.use(cors());
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api", require("./routes/gym"));
+
+
 
 //Escuchar peticiones
 app.listen(process.env.PORT, () => {
