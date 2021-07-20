@@ -218,6 +218,7 @@ const getImage = async (req, res = response) => {
         nombre: file,
       });
 
+      
       data = await s3
         .getObject({
           Bucket: path_file,
@@ -232,7 +233,7 @@ const getImage = async (req, res = response) => {
       return res.status(400).send("No hay un tipo definido");
     }
 
-    // res.writeHead(200, {'Content-Type': 'image/jpeg'});
+    //res.writeHead(200, {'Content-Type': 'image/jpeg'});
     res.write(data.Body, "binary");
     res.end(null, "binary");
 
