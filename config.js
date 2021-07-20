@@ -13,4 +13,6 @@ module.exports = {
   HOST: process.env.HOST || "127.0.0.1",
   PORT: process.env.PORT || 3000,
   MONGO_CONNECT: `${MONGO_BASE}${USER_PPR}${MONGO_URL_GYM}`,
+  S3_ACCESS_ID : process.env.S3_ACCESS_ID,
+  S3_SECRET: process.env.S3_SECRET
 };

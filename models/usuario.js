@@ -8,6 +8,7 @@ var Usuario = Schema({
   nickname: String,
   password: String,
   photo: String,
+  imagenes: { fileName: String, key: String },
   nombre: String,
   apellidos: String,
   dni: String,
@@ -44,7 +45,7 @@ var Usuario = Schema({
     },
   ],
   active: Boolean,
-  entrenamientos: [String]
+  entrenamientos: [String],
 });
 
 module.exports = mongoose.model("User", Usuario);
