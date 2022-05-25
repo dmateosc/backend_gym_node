@@ -75,3 +75,35 @@ router.get("/muscles", MusculoController.getMusculos);
 router.post("/create-muscle", MusculoController.createMusculo);
 
 module.exports = router;
+
+/*
+
+var userStore = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/user");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+var muscleStore = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/muscles");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+var exerciseStore = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/exercise");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+var multiMiddlewareMuscle = multer({ storage: muscleStore });
+var multiMiddlewareExercise = multer({ storage: exerciseStore });
+var multiMiddlewareUser = multer({ storage: userStore });
+
+*/

@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "set NODE_ENV=development&& nodemon index.js",
-    "prod": "set NODE_ENV=production&& nodemon index.js"
+    "dev": "set NODE_ENV=development && nodemon index.js",
+    "prod": "set NODE_ENV=production && nodemon index.js"
   },
   "author": "David Mateos Cano",
   "license": "MIT",
