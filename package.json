@@ -18,7 +18,7 @@
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-validator": "^6.9.2",
     "generate-schema": "^2.6.0",
     "json-schema-generator": "^2.0.6",
